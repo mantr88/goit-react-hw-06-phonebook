@@ -7,6 +7,7 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from './Utils/Theme';
 import { Layout } from './Layout/Layout';
 import initialContacts from '../contacts';
+import { useSelector } from 'react-redux';
 
 const getInitialContacts = () => {
   const savedContacts = localStorage.getItem('contacts');
@@ -18,31 +19,18 @@ const getInitialContacts = () => {
 };
 
 export const App = () => {
-  const [contacts, setContacts] = useState(getInitialContacts);
   const [filter, setFilter] = useState('');
+  const contacts = useSelector(state => state.contacts);
 
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
+  // useEffect(() => {
+  //   localStorage.setItem('contacts', JSON.stringify(contacts));
+  // }, [contacts]);
 
-  const addContact = newContact => {
-    const checkContactName = contacts.find(
-      contact => contact.name.toLowerCase() === newContact.name.toLowerCase()
-    );
-
-    if (checkContactName) {
-      alert(`${newContact.name} is allready in contact!`);
-      return;
-    } else {
-      setContacts(pervState => [...pervState, newContact]);
-    }
-  };
-
-  const deleteContact = contactId => {
-    setContacts(pervState =>
-      pervState.filter(contact => contact.id !== contactId)
-    );
-  };
+  // const deleteContact = contactId => {
+  //   setContacts(pervState =>
+  //     pervState.filter(contact => contact.id !== contactId)
+  //   );
+  // };
 
   const changeFilter = e => {
     setFilter(e.currentTarget.value);
@@ -58,10 +46,10 @@ export const App = () => {
     <ThemeProvider theme={theme}>
       <Layout>
         <h1>Phonebook</h1>
-        <ContactForm addContact={addContact} />
+        <ContactForm />
         <h2>Contacts</h2>
         <Filter value={filter} onChange={changeFilter} />
-        <ContactList contacts={visibleContacts} onDelete={deleteContact} />
+        <ContactList contacts={visibleContacts} />
         <GlobalStyle />
       </Layout>
     </ThemeProvider>

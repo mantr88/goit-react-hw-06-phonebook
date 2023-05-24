@@ -1,20 +1,15 @@
-import { ContactCard } from "components/ContactCard/ContactCard";
+import { ContactCard } from 'components/ContactCard/ContactCard';
 import PropTypes from 'prop-types';
-import { List } from "./ContactList.styled";
+import { List } from './ContactList.styled';
+import { useSelector } from 'react-redux';
 
-export const ContactList = ({contacts, onDelete}) => {
-    return (
-            <List>
-            {contacts.map(contact => (
-                    <ContactCard key={contact.id} contact={contact} onDelete={onDelete} />
-                ))}
-            </List>
-        )
-};
-
-ContactList.propTypes = {
-    contacts: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string.isRequired
-    })),
-    onDelete: PropTypes.func.isRequired
+export const ContactList = () => {
+  const contacts = useSelector(state => state.contacts);
+  return (
+    <List>
+      {contacts.map(contact => (
+        <ContactCard key={contact.id} contact={contact} />
+      ))}
+    </List>
+  );
 };
