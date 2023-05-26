@@ -1,5 +1,4 @@
 import { ContactCard } from 'components/ContactCard/ContactCard';
-import PropTypes from 'prop-types';
 import { List } from './ContactList.styled';
 import { useSelector } from 'react-redux';
 

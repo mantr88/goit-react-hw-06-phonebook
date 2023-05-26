@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { GlobalStyle } from './Utils/GlobalStyle';
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
@@ -6,17 +6,7 @@ import { Filter } from './Filter/Filter';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './Utils/Theme';
 import { Layout } from './Layout/Layout';
-import initialContacts from '../contacts';
 import { useSelector } from 'react-redux';
-
-const getInitialContacts = () => {
-  const savedContacts = localStorage.getItem('contacts');
-  if (savedContacts !== null) {
-    return JSON.parse(savedContacts);
-  } else {
-    return initialContacts;
-  }
-};
 
 export const App = () => {
   const [filter, setFilter] = useState('');
