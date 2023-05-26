@@ -7,7 +7,6 @@ export const Filter = () => {
   const value = useSelector(state => state.filter);
   const changeValue = e => {
     console.log(e.target.value);
-    console.log(changeFilter());
     dispatch(changeFilter(e.target.value));
   };
   return (
