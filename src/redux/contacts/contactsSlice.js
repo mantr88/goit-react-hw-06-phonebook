@@ -1,13 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 import initialContacts from '../../contacts.json';
+import storage from 'redux-persist/lib/storage';
+import { persistReducer } from 'redux-persist';
 
 export const contactsSlice = createSlice({
   name: 'contacts',
-  initialState: initialContacts,
+  initialState: {
+    items: initialContacts,
+  },
   reducers: {
     addContact: {
       reducer(state, action) {
-        const checkContactName = state.find(
+        const checkContactName = state.items.find(
           contact =>
             contact.name.toLowerCase() === action.payload.name.toLowerCase()
         );
@@ -15,17 +19,27 @@ export const contactsSlice = createSlice({
           alert(`${action.payload.name} is allready in contact!`);
           return;
         } else {
-          state.push(action.payload);
+          state.items.push(action.payload);
         }
       },
     },
     deleteContact: {
       reducer(state, action) {
-        return state.filter(contact => contact.id !== action.payload);
+        const index = state.items.findIndex(
+          contact => contact.id !== action.payload
+        );
+        state.items.splice(index, 1);
       },
     },
   },
 });
 
 export const { addContact, deleteContact } = contactsSlice.actions;
-export const contactsReducer = contactsSlice.reducer;
+const contactsReducer = contactsSlice.reducer;
+
+const persistConfig = {
+  key: 'contacts',
+  storage,
+};
+
+export const persistedReducer = persistReducer(persistConfig, contactsReducer);
