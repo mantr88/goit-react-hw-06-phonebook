@@ -25,10 +25,7 @@ export const contactsSlice = createSlice({
     },
     deleteContact: {
       reducer(state, action) {
-        const index = state.items.findIndex(
-          contact => contact.id !== action.payload
-        );
-        state.items.splice(index, 1);
+        state.items = state.items.filter(item => item.id !== action.payload);
       },
     },
   },
